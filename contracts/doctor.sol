@@ -4,6 +4,7 @@ pragma solidity ^0.8.3;
 contract Doctors {
     int256 public id = 0;
     mapping(int256 => Doctor) public doctor;
+    int256 timepass;
 
     struct Doctor {
         string name;
