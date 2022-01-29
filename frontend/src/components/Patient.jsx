@@ -6,7 +6,10 @@ const Patient = () => {
     const getRequest = async () => {
       await axios.get("http://localhost:5000/patient/4000").then((res) => {
         console.log(res);
-        setShow(true);
+
+        if (res.data.length > 0) {
+          setShow(true);
+        }
       });
     };
     getRequest();

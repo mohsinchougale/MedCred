@@ -12,13 +12,13 @@ const Doctor = () => {
   };
 
   const getResponse = async () => {
-    await axios.get("http://localhost:5000/doctor/2000").then((res) => setPatientResponse(res?.data[0]?.response));
+    await axios.get("http://localhost:5000/doctor/2000").then((res) => console.log(res?.data[0]?.response));
 
-    if (patientResponse == "yes") {
-      //Blockchain functionality
-    } else {
-      navigate("/");
-    }
+    // if (patientResponse == "yes") {
+    //   //Blockchain functionality
+    // } else {
+    //   navigate("/");
+    // }
   };
   return (
     <div>
