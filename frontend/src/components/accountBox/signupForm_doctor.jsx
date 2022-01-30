@@ -93,7 +93,7 @@ export function SignupForm_Doctor(props) {
       .then((response) => response.json(), navigate("/home_doctor"))
       .then((data) => {
         console.log("Success:", data);
-        localStorage.setItem("profile", JSON.stringify({ data }));
+        localStorage.setItem("doctor", JSON.stringify({ data }));
         // setSignedIn({firstName:user.fullName,loggedIn:"True"})
       })
       .catch((error) => {

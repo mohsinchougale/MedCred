@@ -6,7 +6,7 @@ const userRoutes = require("./routes/user.js");
 const dotenv = require("dotenv");
 dotenv.config();
 
-const PORT = 5001;
+const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running at ${PORT}`));
 
 app.use(express.json());

@@ -107,7 +107,7 @@ export function SignupForm_Patient(props) {
       provider
     );
 
-    const abc = await patient.patient(1);
+    // const abc = await patient.patient(1);
 
     await patient.addPatient(
       name,
@@ -129,7 +129,7 @@ export function SignupForm_Patient(props) {
       .then((response) => response.json(), navigate("/home_patient"))
       .then((data) => {
         console.log("Success:", data);
-        localStorage.setItem("profile", JSON.stringify({ data }));
+        localStorage.setItem("patient", JSON.stringify({ data }));
         // setSignedIn({firstName:user.fullName,loggedIn:"True"})
       })
       .catch((error) => {

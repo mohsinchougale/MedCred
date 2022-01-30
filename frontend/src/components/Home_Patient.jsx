@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useMetaMask } from "metamask-react";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import "./Home_Patient.css";
 const Home_Patient = () => {
   const { account } = useMetaMask();
   const [show, setShow] = useState(false);
+  const [doctorId, setDoctorId] = useState("");
+  const userId = JSON.parse(localStorage.getItem("patient"))?.["data"][
+    "result"
+  ]["_id"];
 
   useEffect(() => {
     const getRequest = async () => {
@@ -11,7 +18,9 @@ const Home_Patient = () => {
         console.log(res);
 
         if (res?.data?.length > 0) {
+          console.log("a");
           setShow(true);
+          setDoctorId(res.data[0].doctorId);
         }
       });
     };
@@ -20,8 +29,8 @@ const Home_Patient = () => {
 
   const sendResponse = async (r) => {
     const response = {
-      doctorId: "2000",
-      patientId: "4000",
+      doctorId: doctorId,
+      patientId: userId,
       response: r,
       receiverKey: account,
     };
@@ -32,9 +41,27 @@ const Home_Patient = () => {
 
   return (
     <div>
-      Hello
-      {show && <button onClick={() => sendResponse("yes")}> Yes</button>}
-      {show && <button onClick={() => sendResponse("no")}>No</button>}
+      {show && (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => sendResponse("yes")}
+          className="btn"
+        >
+          {" "}
+          Yes
+        </Button>
+      )}
+      {show && (
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => sendResponse("no")}
+          className="btn"
+        >
+          No
+        </Button>
+      )}
     </div>
   );
 };

@@ -20,7 +20,7 @@ export function LoginForm_Doctor(props) {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
     const data = { email, password };
-
+    console.log(data);
     fetch("http://localhost:5000/doctor_signin", {
       method: "POST", // or 'PUT'
       headers: {
@@ -28,14 +28,22 @@ export function LoginForm_Doctor(props) {
       },
       body: JSON.stringify(data),
     })
+      //     .then(response => response.json())
+      // .then(data => {
+      //   console.log('Success:', data);
+      // })
+      // .catch((error) => {
+      //   console.error('Error:', error);
+      // });
       .then((response) => {
         response.json();
+        console.log(response.json());
         if (response.status >= 400) navigate("/");
         // if (response.status !== 404)
       })
       .then((data) => {
         console.log("Success:", data);
-        localStorage.setItem("profile", JSON.stringify({ data }));
+        localStorage.setItem("doctor", JSON.stringify({ data }));
         navigate("/home_doctor");
       })
       .catch((error) => {

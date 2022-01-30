@@ -34,7 +34,7 @@ export function LoginForm_Patient(props) {
       })
       .then((data) => {
         console.log("Success:", data);
-        localStorage.setItem("profile", JSON.stringify({ data }));
+        localStorage.setItem("patient", JSON.stringify({ data }));
       })
       .catch((error) => {
         console.error("Error:", error);

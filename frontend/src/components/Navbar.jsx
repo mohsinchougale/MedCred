@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import Dropdown from "./Dropdown";
+import icon from "../assets/medcred_logo.png";
 
 function Navbar() {
   const [click, setClick] = useState(false);
@@ -40,9 +41,9 @@ function Navbar() {
   return (
     <>
       <nav className="navbar">
-        {/* <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
+        <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
           <img className="navbar-img" src={icon} alt="mohsin.jpg" />
-        </Link> */}
+        </Link>
 
         <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
           MedCred
