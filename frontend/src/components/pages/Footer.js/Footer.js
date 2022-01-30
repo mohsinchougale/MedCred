@@ -1,15 +1,32 @@
 import React from "react";
 import "./Footer.css";
-
 import { Link } from "react-router-dom";
-import { Button } from "@material-ui/core";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaYoutube,
+  FaTwitter,
+  FaLinkedin,
+} from "react-icons/fa";
+import { MdFingerprint } from "react-icons/md";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& > *": {
+      margin: theme.spacing(1),
+    },
+  },
+}));
 
 function Footer() {
+  const classes = useStyles();
   return (
     <div className="footer-container">
       <section className="footer-subscription">
         <p className="footer-subscription-heading">
-          Join the newsletter to receive the latest news.
+          Join our exclusive membership to receive the latest news and trends
         </p>
         <p className="footer-subscription-text">
           You can unsubscribe at any time.
@@ -22,7 +39,7 @@ function Footer() {
               type="email"
               placeholder="Your Email"
             />
-            <Button variant="contained" color="secondary">
+            <Button variant="contained" color="primary">
               Subscribe
             </Button>
           </form>
@@ -32,7 +49,7 @@ function Footer() {
         <div className="footer-link-wrapper">
           <div className="footer-link-items">
             <h2>About Us</h2>
-            <Link to="/signin">How it works</Link>
+            <Link to="/sign-up">How it works</Link>
             <Link to="/">Testimonials</Link>
             <Link to="/">Careers</Link>
             <Link to="/">Investors</Link>
@@ -67,51 +84,53 @@ function Footer() {
         <div className="social-media-wrap">
           <div className="footer-logo">
             <Link to="/" className="social-logo">
-              Super-Saviours
-              <i className="fab fa-typo3" />
+              <MdFingerprint className="navbar-icon" />
+              MedCred
             </Link>
           </div>
-          <small className="website-rights">TRVL © 2020</small>
+          <small className="website-rights">MedCred © 2022</small>
           <div className="social-icons">
             <Link
-              className="social-icon-link facebook"
+              className="social-icon-link"
               to="/"
               target="_blank"
               aria-label="Facebook"
             >
-              <i class="fab fa-facebook-f" />
+              <FaFacebook />
             </Link>
             <Link
-              className="social-icon-link instagram"
+              className="social-icon-link"
               to="/"
               target="_blank"
               aria-label="Instagram"
             >
-              <i className="fab fa-instagram" />
+              <FaInstagram />
             </Link>
             <Link
-              className="social-icon-link youtube"
-              to="/"
+              className="social-icon-link"
+              to={
+                "//www.youtube.com/channel/UCsKsymTY_4BYR-wytLjex7A?view_as=subscriber"
+              }
               target="_blank"
               aria-label="Youtube"
             >
-              <i className="fab fa-youtube" />
+              <FaYoutube />
             </Link>
             <Link
-              className="social-icon-link twitter"
+              className="social-icon-link"
               to="/"
               target="_blank"
               aria-label="Twitter"
             >
-              <i className="fab fa-twitter" />
+              <FaTwitter />
             </Link>
             <Link
-              className="social-icon-link twitter"
+              className="social-icon-link"
               to="/"
               target="_blank"
               aria-label="LinkedIn"
             >
-              <i className="fab fa-linkedin" />
+              <FaLinkedin />
             </Link>
           </div>
         </div>

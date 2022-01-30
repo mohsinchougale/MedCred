@@ -1,17 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import Dropdown from "./Dropdown";
 
-// import icon from "../assets/icon1.png";
-
 function Navbar() {
   const [click, setClick] = useState(false);
   const [dropdown, setDropdown] = useState(false);
+  const [val, setVal] = useState("");
 
+  // if (user) console.log(user);
   const handleClick = () => setClick(!click);
-  const closeMobileMenu = () => setClick(false);
+  const closeMobileMenu = () => {
+    setClick(false);
+    localStorage.clear();
+  };
+  const user = JSON.parse(localStorage.getItem("profile"));
+
+  useEffect(() => {
+    if (user?.data?.result?.name) setVal(user.data.result.name);
+  }, [user]);
 
   const onMouseEnter = () => {
     if (window.innerWidth < 960) {
@@ -49,16 +57,28 @@ function Navbar() {
               Home
             </Link>
           </li>
-          <li
-            className="nav-item"
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-          >
-            <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-              Login <i className="fas fa-caret-down" />
-            </Link>
-            {dropdown && <Dropdown />}
-          </li>
+          {val ? (
+            <li
+              className="nav-item"
+              onMouseEnter={onMouseEnter}
+              onMouseLeave={onMouseLeave}
+            >
+              <Link to="/" className="nav-links" onClick={closeMobileMenu}>
+                Logout <i className="fas fa-caret-down" />
+              </Link>
+            </li>
+          ) : (
+            <li
+              className="nav-item"
+              onMouseEnter={onMouseEnter}
+              onMouseLeave={onMouseLeave}
+            >
+              <Link to="/" className="nav-links" onClick={closeMobileMenu}>
+                Login <i className="fas fa-caret-down" />
+              </Link>
+              {dropdown && <Dropdown />}
+            </li>
+          )}
 
           <li className="nav-item">
             <Link
@@ -66,7 +86,7 @@ function Navbar() {
               className="nav-links"
               onClick={closeMobileMenu}
             >
-              Contact Us
+              Contact us
             </Link>
           </li>
           <li>

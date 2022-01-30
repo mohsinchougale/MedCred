@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useRef, useState, useEffect } from "react";
 import {
   BoldLink,
   BoxContainer,
@@ -9,7 +9,10 @@ import {
 } from "./common";
 import { Marginer } from "../marginer";
 import { useNavigate } from "react-router";
-
+import { ethers } from "ethers";
+import patientABI from "../../ABIs/patientABI.json";
+import { useMetaMask } from "metamask-react";
+import "./signupForm_patient.css";
 // string name;
 // uint256 age;
 // uint256 height;
@@ -32,7 +35,25 @@ export function SignupForm_Patient(props) {
   const passwordRef = useRef();
   const password1Ref = useRef();
 
-  const saveDetails = (event) => {
+  const [pt, setPt] = useState({
+    name: "",
+    age: "",
+    height: "",
+    weight: "",
+    gender: "",
+    contact: "",
+    address: "",
+    email: "",
+    public_key: "",
+  });
+
+  const { status, connect, account } = useMetaMask();
+
+  useEffect(() => {
+    console.log(account);
+    if (account) setPt({ public_key: account });
+  }, [account]);
+  const saveDetails = async (event) => {
     const name = usernameRef.current.value;
     const age = ageRef.current.value;
     const height = heightRef.current.value;
@@ -44,8 +65,21 @@ export function SignupForm_Patient(props) {
     const password = passwordRef.current.value;
     const confirmPassword = password1Ref.current.value;
 
+    setPt({
+      name,
+      age,
+      height,
+      weight,
+      gender,
+      contact,
+      address,
+      email,
+      public_key: account,
+    });
+
     // const password = passwordRef.current.value;
     // const confirmPassword = password1Ref.current.value;
+
     const data = {
       name,
       age,
@@ -59,16 +93,43 @@ export function SignupForm_Patient(props) {
       confirmPassword,
     };
 
-    fetch("http://localhost:5001/patient_signup/", {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send("eth_requestAccounts", []);
+
+    console.log("P", provider);
+    console.log(pt);
+    const signer = await provider.getSigner();
+    const signerAddress = await signer.getAddress();
+    const patient = new ethers.Contract(
+      "0x07469c006f35b58a4A52E77aAcf6A14fcE332276",
+      patientABI,
+      signer,
+      provider
+    );
+
+    const abc = await patient.patient(1);
+
+    await patient.addPatient(
+      name,
+      age,
+      height,
+      weight,
+      gender,
+      contact,
+      address,
+      account
+    );
+    fetch("http://localhost:5000/patient_signup/", {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     })
-      .then((response) => response.json(), navigate("/"))
+      .then((response) => response.json(), navigate("/home_patient"))
       .then((data) => {
         console.log("Success:", data);
+        localStorage.setItem("profile", JSON.stringify({ data }));
         // setSignedIn({firstName:user.fullName,loggedIn:"True"})
       })
       .catch((error) => {

@@ -21,7 +21,7 @@ export function LoginForm_Patient(props) {
     const password = passwordRef.current.value;
     const data = { email, password };
 
-    fetch("http://localhost:5001/patient_signin", {
+    fetch("http://localhost:5000/patient_signin", {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
@@ -30,15 +30,16 @@ export function LoginForm_Patient(props) {
     })
       .then((response) => {
         response.json();
-        if (response.status !== 404) navigate("/");
+        if (response.status !== 404) navigate("/home_patient");
       })
       .then((data) => {
         console.log("Success:", data);
+        localStorage.setItem("profile", JSON.stringify({ data }));
       })
       .catch((error) => {
         console.error("Error:", error);
+        navigate("/");
       });
-    navigate("/");
   };
 
   return (

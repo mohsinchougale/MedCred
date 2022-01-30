@@ -1,0 +1,10 @@
+.container {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+}
+.btn {
+  margin: 20px;
+  padding: 3px;
+  border-radius: 1.5px;
+}
